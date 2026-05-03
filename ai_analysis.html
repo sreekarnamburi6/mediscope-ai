@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="ai-panel">
+
+    <h1>{{ icon }} {{ title }}</h1>
+    <a href="/" class="back-btn">← Back to Dashboard</a>
+
+    <p class="ai-state" id="aiState">
+        AI Status: Waiting for input
+    </p>
+
+    {% if upload_hint %}
+    <p style="color:#ffcc00;font-size:14px;margin-bottom:12px;">
+        {{ upload_hint }}
+    </p>
+    {% endif %}
+
+    <!-- 🚨 STRONG WARNING (Frontend heuristic only) -->
+    <div id="warningBox"
+         style="display:none;
+                background:#3b1d1d;
+                color:#ffb3b3;
+                padding:14px;
+                border-radius:12px;
+                font-size:13px;
+                margin-bottom:15px;">
+        ⚠️ <b>Warning:</b> This image may NOT be a valid medical scan.
+        <br>
+        The AI model expects:
+        <b>
+            {% if "Pneumonia" in title or "Tuberculosis" in title %}
+                Chest X-ray
+            {% elif "Brain" in title %}
+                Brain MRI
+            {% elif "Skin" in title %}
+                Skin lesion image
+            {% elif "Retinopathy" in title or "Glaucoma" in title %}
+                Retinal fundus image
+            {% elif "Kidney" in title %}
+                Ultrasound image
+            {% elif "Malaria" in title %}
+                Blood smear image
+            {% else %}
+                Medical image
+            {% endif %}
+        </b>.
+        <br>
+        <u>Prediction reliability may be LOW.</u>
+    </div>
+
+    <!-- Upload Form -->
+    <form id="uploadForm" action="{{ action }}" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" id="fileInput" accept="image/*" required>
+        <br><br>
+
+        <!-- ✅ FIXED CHECKBOX -->
+        <label class="confirm-box" style="font-size:14px;">
+            <input type="checkbox" name="confirm_medical">
+            I confirm that the uploaded image belongs to the selected disease category
+        </label>
+
+        <br><br>
+
+        <button type="submit" id="predictBtn">
+            Start AI Analysis
+        </button>
+    </form>
+
+    <!-- Preview -->
+    <div class="process">
+        <div class="scan-box">
+            <img id="preview" style="display:none;">
+        </div>
+        <p id="thinking" class="thinking">Waiting for image…</p>
+    </div>
+
+    <!-- ❌ BACKEND ERROR MESSAGE -->
+    {% if result and confidence == 0 %}
+    <div class="result-card low" style="border:1px solid #ff4d4d;">
+        <h2 style="color:#ff4d4d;">{{ result }}</h2>
+        <p style="font-size:12px;opacity:0.7;">
+            Please upload the correct medical image type.
+        </p>
+    </div>
+    {% endif %}
+
+    <!-- ✅ VALID RESULT -->
+    {% if result and confidence > 0 %}
+    <div class="result-card {{ risk }}">
+        <h2>{{ result }}</h2>
+
+        <p class="confidence">
+            Confidence: <strong>{{ confidence }}%</strong>
+        </p>
+
+        <div class="confidence-bar">
+            <div class="confidence-fill {{ risk }}"
+                 style="width: {{ confidence }}%;"></div>
+        </div>
+
+        <p style="font-size:12px;opacity:0.7;margin-top:12px;">
+            ⚠ AI-assisted screening only. Results depend on image quality.
+        </p>
+    </div>
+    {% endif %}
+
+</div>
+
+<script>
+const fileInput = document.getElementById("fileInput");
+const preview = document.getElementById("preview");
+const warningBox = document.getElementById("warningBox");
+const state = document.getElementById("aiState");
+const thinking = document.getElementById("thinking");
+
+fileInput.addEventListener("change", function () {
+    const file = this.files[0];
+    if (!file) return;
+
+    // Preview
+    const reader = new FileReader();
+    reader.onload = e => {
+        preview.src = e.target.result;
+        preview.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+
+    // 🚨 Simple heuristic (frontend only)
+    const name = file.name.toLowerCase();
+    const sizeMB = file.size / (1024 * 1024);
+
+    if (
+        name.includes("screenshot") ||
+        name.includes("screen") ||
+        sizeMB < 0.2
+    ) {
+        warningBox.style.display = "block";
+    } else {
+        warningBox.style.display = "none";
+    }
+
+    state.innerText = "AI Status: Image loaded";
+    thinking.innerText = "Ready for analysis";
+});
+</script>
+
+</body>
+</html>
