@@ -46,7 +46,8 @@ Run the application:
 ---
 
 ## 📷 Screenshots
-(Add screenshots of your web app here)
+<img width="1920" height="1080" alt="Screenshot 2026-03-13 125646" src="https://github.com/user-attachments/assets/13a17810-3ca9-4a66-8627-a52b5d4ad86f" />
+
 
 ---
 
@@ -60,4 +61,5 @@ Run the application:
 ## 👨‍💻 Author
 Namburi Sreekar  
 AI/ML Enthusiast
+
 
