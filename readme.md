@@ -1,40 +1,63 @@
-# MediScope AI – Multi-Disease Detection System
+# 🏥 MediScope AI – Multi-Disease Detection Platform
 
-## Project Description
-MediScope AI is an AI-powered medical diagnostic system that detects multiple diseases using deep learning models and medical images.
+## 📌 Overview
+MediScope AI is a machine learning-based healthcare application designed to assist in early disease detection using trained ML/DL models. The system provides predictions through a user-friendly web interface built with Flask.
 
-Supported diseases:
-- Pneumonia (Chest X-ray)
-- Brain Tumor (MRI)
-- Skin Cancer (Dermatology images)
-- Diabetic Retinopathy (Fundus images)
+---
 
-## Technologies Used
+## 🚀 Features
+- Multi-disease prediction
+- Trained Machine Learning models
+- Flask-based web deployment
+- Real-time prediction interface
+- Clean and simple UI
+
+---
+
+## 🧠 Tech Stack
 - Python
+- Scikit-learn
+- Deep Learning Models
 - Flask
-- TensorFlow / Keras
-- HTML, CSS, JavaScript
+- HTML/CSS
 
-## How to Run
-1. Install Python 3.10+
-2. Install dependencies:
-   pip install -r requirements.txt
-3. Run the application:
-   python app.py
-4. Open browser:
-   http://127.0.0.1:5000
+---
 
-## Features
-- Multi-disease detection
-- AI scan animation
-- Confidence score & risk level
-- Doctor recommendation
-- Explainable AI insights
-- User-friendly interface
+## 📊 Machine Learning Workflow
+1. Data Collection
+2. Data Preprocessing
+3. Feature Selection
+4. Model Training
+5. Model Evaluation
+6. Deployment using Flask
 
-## Future Scope
-- Heatmap visualization (Grad-CAM)
-- More disease modules
-- Clinical validation
-- Report generation
-"# mediscope-ai" 
+---
+
+## ▶️ How to Run Locally
+
+Clone the repository:
+git clone https://github.com/sreekarnamburi6/mediscope-ai.git
+cd mediscope-ai
+
+Install dependencies:
+
+Run the application:
+
+---
+
+## 📷 Screenshots
+(Add screenshots of your web app here)
+
+---
+
+## 📈 Future Improvements
+- Add deep learning optimization
+- Improve UI
+- Deploy on cloud (Render/Heroku/AWS)
+
+---
+
+## 👨‍💻 Author
+Namburi Sreekar  
+AI/ML Enthusiast
+
